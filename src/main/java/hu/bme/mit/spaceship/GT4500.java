@@ -1,5 +1,5 @@
 package hu.bme.mit.spaceship;
-
+//ezt a sort szerkesztettem
 /**
 * A simple spaceship with two proton torpedo stores and four lasers
 */
