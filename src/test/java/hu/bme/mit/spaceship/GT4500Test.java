@@ -21,7 +21,7 @@ public class GT4500Test {
   }
 
   @Test
-  public void fireTorpedo_Single_Success(){
+  public void fireTorpedo_Single_Success_Secondary(){
     // Arrange
     when(primaryMock.isEmpty()).thenReturn(true);
     when(primaryMock.fire(1)).thenReturn(false);
@@ -32,10 +32,15 @@ public class GT4500Test {
 
     // Assert
     assertEquals(true, result);
+    //verifying
+    verify(primaryMock, times(1)).isEmpty();
+    verify(primaryMock, times(0)).fire(1);
+    verify(secondrayMock, times(1)).isEmpty();
+    verify(secondrayMock, times(1)).fire(1);
   }
 
   @Test
-  public void fireTorpedo_All_Success(){
+  public void fireTorpedo_All_Success_All(){
     // Arrange
     when(primaryMock.isEmpty()).thenReturn(false);
     when(primaryMock.fire(1)).thenReturn(true);
@@ -46,6 +51,106 @@ public class GT4500Test {
 
     // Assert
     assertEquals(true, result);
+    //verifying
+    verify(primaryMock, times(1)).isEmpty();
+    verify(primaryMock, times(1)).fire(1);
+    verify(secondrayMock, times(1)).isEmpty();
+    verify(secondrayMock, times(1)).fire(1);
+  }
+
+  @Test
+  public void fireTorpedo_Single_Success_Primary(){
+    // Arrange
+    when(primaryMock.isEmpty()).thenReturn(false);
+    when(primaryMock.fire(1)).thenReturn(true);
+    when(secondrayMock.isEmpty()).thenReturn(true);
+    when(secondrayMock.fire(1)).thenReturn(false);
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+
+    // Assert
+    assertEquals(true, result);
+    //verifying
+    verify(primaryMock, times(1)).isEmpty();
+    verify(primaryMock, times(1)).fire(1);
+    verify(secondrayMock, times(0)).isEmpty();
+    verify(secondrayMock, times(0)).fire(1);
+  }
+
+  @Test
+  public void fireTorpedo_Single_Fail(){
+    // Arrange
+    when(primaryMock.isEmpty()).thenReturn(true);
+    when(primaryMock.fire(1)).thenReturn(false);
+    when(secondrayMock.isEmpty()).thenReturn(true);
+    when(secondrayMock.fire(1)).thenReturn(false);
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+
+    // Assert
+    assertEquals(false, result);
+    //verifying
+    verify(primaryMock, times(1)).isEmpty();
+    verify(primaryMock, times(0)).fire(1);
+    verify(secondrayMock, times(1)).isEmpty();
+    verify(secondrayMock, times(0)).fire(1);
+  }
+
+  @Test
+  public void fireTorpedo_All_Success_Primary(){
+    // Arrange
+    when(primaryMock.isEmpty()).thenReturn(false);
+    when(primaryMock.fire(1)).thenReturn(true);
+    when(secondrayMock.isEmpty()).thenReturn(true);
+    when(secondrayMock.fire(1)).thenReturn(false);
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.ALL);
+
+    // Assert
+    assertEquals(true, result);
+    //verifying
+    verify(primaryMock, times(1)).isEmpty();
+    verify(primaryMock, times(1)).fire(1);
+    verify(secondrayMock, times(1)).isEmpty();
+    verify(secondrayMock, times(0)).fire(1);
+  }
+
+  @Test
+  public void fireTorpedo_All_Success_Secondary(){
+    // Arrange
+    when(primaryMock.isEmpty()).thenReturn(true);
+    when(primaryMock.fire(1)).thenReturn(false);
+    when(secondrayMock.isEmpty()).thenReturn(false);
+    when(secondrayMock.fire(1)).thenReturn(true);
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.ALL);
+
+    // Assert
+    assertEquals(true, result);
+    //verifying
+    verify(primaryMock, times(1)).isEmpty();
+    verify(primaryMock, times(0)).fire(1);
+    verify(secondrayMock, times(1)).isEmpty();
+    verify(secondrayMock, times(1)).fire(1);
+  }
+
+  @Test
+  public void fireTorpedo_All_Fail(){
+    // Arrange
+    when(primaryMock.isEmpty()).thenReturn(true);
+    when(primaryMock.fire(1)).thenReturn(false);
+    when(secondrayMock.isEmpty()).thenReturn(true);
+    when(secondrayMock.fire(1)).thenReturn(false);
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.ALL);
+
+    // Assert
+    assertEquals(false, result);
+    //verifying
+    verify(primaryMock, times(1)).isEmpty();
+    verify(primaryMock, times(0)).fire(1);
+    verify(secondrayMock, times(1)).isEmpty();
+    verify(secondrayMock, times(0)).fire(1);
   }
 
 }
